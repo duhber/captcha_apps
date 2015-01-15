@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Click Anywhere!</title>
+</head>
+<body bgcolor="#708090">
+<img id="im" src='image/2001.jpg' style="float:left;width:600px;height:400px;"/>
+<p id="point"></p>
+<script>
+    document.addEventListener("click",eHandler,false);
+    function eHandler(e){
+        var x=e.clientX;
+        var y=e.clientY;
+        var I=document.getElementById("im");
+        x-=I.offsetLeft;
+        y-=I.offsetTop;
+        var res=x.toString()+"<br>"+y.toString();
+        document.getElementById("point").innerHTML=res;
+    }
+</script>
+
+</body>
+</html>
