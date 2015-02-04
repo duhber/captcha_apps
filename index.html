@@ -2,22 +2,43 @@
 <html>
 <head>
     <title>Click Anywhere!</title>
+   <!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script> -->
+   <script src="jquery-1.11.2.js"></script>
+    <script type="text/javascript">
+        var imId=2;
+        $(document).ready(function(){
+    		$("#imr").click(function(e){
+                var offset=$(this).offset();
+                var x1=e.clientX-offset.left;
+                var y1=e.clientY-offset.top;
+                    				
+                $.get("check_points.php",{imid:imId,x:x1,y:y1})
+                    .done(function(data){
+                        alert(data);
+                    });
+    		});
+		});
+    </script>
 </head>
 <body bgcolor="#708090">
-<img id="im" src='image/2001.jpg' style="float:left;width:600px;height:400px;"/>
+<img id="iml" src='image/2_l.jpg' style="float:left;width:600px;height:400px;"/>
+<img id="imr" src='image/2_r.jpg' style="float:right;width:600px;height:400px;"/>
 <p id="point"></p>
+
+<button type="button" onclick="reloadImg()">reload</button>
+
 <script>
-    document.addEventListener("click",eHandler,false);
-    function eHandler(e){
-        var x=e.clientX;
-        var y=e.clientY;
-        var I=document.getElementById("im");
-        x-=I.offsetLeft;
-        y-=I.offsetTop;
-        var res=x.toString()+"<br>"+y.toString();
-        document.getElementById("point").innerHTML=res;
+    function reloadImg(){       
+        imId=Math.floor((Math.random()*10)+1);
+        var leftImgName="image/"+imId.toString()+"_l.jpg";
+        var rigtImgName="image/"+imId.toString()+"_r.jpg";
+        
+        var ImgLeft=document.getElementById("iml");
+        var ImgRigt=document.getElementById("imr");
+
+        ImgLeft.src=leftImgName;
+        ImgRigt.src=rigtImgName;
     }
 </script>
-
 </body>
 </html>
