@@ -5,34 +5,62 @@
    <!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script> -->
    <script src="jquery-1.11.2.js"></script>
     <script type="text/javascript">
-        var imId=2;
+        var imId=1001;
         $(document).ready(function(){
+
+        $.get("genId.php",{d:new Date()})
+                    .done(function(data){
+                       d = new Date();
+                       $("#iml").attr('src', 'getImage.php?side=left'+'&date='+d);  
+                       d = new Date();
+                       $("#imr").attr('src', 'getImage.php?side=right'+'&date='+d); 
+                    });
+                 
+        $("#reload").click(function(e){
+                var offset=$(this).offset();
+                var x1=e.clientX-offset.left;
+                var y1=e.clientY-offset.top;
+                
+                    				
+                $.get("genId.php",{d:new Date()})
+                    .done(function(data){
+                       d = new Date();
+                       $("#iml").attr('src', 'getImage.php?randId='+data+'&side=left'+'&date='+d);  
+                       d = new Date();
+                       $("#imr").attr('src', 'getImage.php?randId='+data+'&side=right'+'&date='+d); 
+                    });
+                    
+    		});
+
     		$("#imr").click(function(e){
                 var offset=$(this).offset();
                 var x1=e.clientX-offset.left;
                 var y1=e.clientY-offset.top;
+                
+                d = new Date();
                     				
-                $.get("check_points.php",{imid:imId,x:x1,y:y1})
+                $.get("check_points.php",{x:x1,y:y1})
                     .done(function(data){
-                        alert(data);
+                       alert(data);
                     });
+                   
     		});
 		});
     </script>
 </head>
 <body bgcolor="#708090">
-<img id="iml" src='image/2_l.jpg' style="float:left;width:600px;height:400px;"/>
-<img id="imr" src='image/2_r.jpg' style="float:right;width:600px;height:400px;"/>
-<p id="point"></p>
-
-<button type="button" onclick="reloadImg()">reload</button>
+<div style="height:420px">
+<img id="iml" src='#' style="float:left;width:600px;height:400px;"/>
+<img id="imr" src='#' style="float:right;width:600px;height:400px;"/>
+</div>
+<div>
+<img id="reload" src="image/reload.png" style="height:30px; width:30px"/>
+</div>
 
 <script>
     function reloadImg(){       
-        imId=Math.floor((Math.random()*10)+1);
-        var leftImgName="image/"+imId.toString()+"_l.jpg";
-        var rigtImgName="image/"+imId.toString()+"_r.jpg";
         
+        $.get("genImageId.php"
         var ImgLeft=document.getElementById("iml");
         var ImgRigt=document.getElementById("imr");
 
